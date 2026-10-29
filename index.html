@@ -1,20 +1,32 @@
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
-  #content {
-    width: 640px;
-    background: white;
-    padding: 16px;
-    box-sizing: border-box;
+  @font-face {
+    font-family: "Win95";
+    src: url("https://unpkg.com/98.css@0.1.20/dist/ms_sans_serif.woff2")
+      format("woff2");
+    font-weight: 400;
   }
 
-  #pixelated {
-    width: 640px;
-    max-width: 100%;
-    image-rendering: pixelated;
+  @font-face {
+    font-family: "Win95";
+    src: url("https://unpkg.com/98.css@0.1.20/dist/ms_sans_serif_bold.woff2")
+      format("woff2");
+    font-weight: 700;
   }
-</style>
 
+  body {
+    font-family: "Win95", sans-serif;
+    font-size: 11px;
+    background: #c0c0c0;
+    color: black;
+    margin: 24px;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+  }
+  </style>
 <div id="content">
   <h1>RollerCoasTerps</h1>
   <p>We are a roller coaster and theme park club at UMD</p>
@@ -23,27 +35,3 @@
   <a href="https://www.instagram.com/thrillridesumd/">Instagram</a>
   <a href="https://terplink.umd.edu/organization/thrillrides">TerpLink</a>
 </div>
-
-<canvas id="pixelated"></canvas>
-
-<script>
-  async function pixelate() {
-    await document.fonts.ready;
-
-    const content = document.querySelector("#content");
-    const canvas = document.querySelector("#pixelated");
-
-    const rendered = await html2canvas(content, {
-      scale: 0.5,
-      backgroundColor: "#ffffff"
-    });
-
-    canvas.width = rendered.width;
-    canvas.height = rendered.height;
-    canvas.getContext("2d").drawImage(rendered, 0, 0);
-
-    content.style.display = "none";
-  }
-
-  pixelate();
-</script>
