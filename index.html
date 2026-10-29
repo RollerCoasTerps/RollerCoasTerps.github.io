@@ -1,20 +1,85 @@
 <style>
   .pixelated {
-    width: 320px;
-    zoom: 3;
-   
+    width: 640px;
+    max-width: 100%;
+  }
+
+  .pixelated canvas {
+    display: block;
+    width: 100%;
+    image-rendering: pixelated;
+  }
+
+  .pixelated a {
+    display: block;
+    margin-bottom: 12px;
   }
 </style>
 
-
 <div class="pixelated">
-<h1>RollerCoasTerps</h1>
+  <canvas data-text="RollerCoasTerps" data-heading="true"
+    role="img" aria-label="RollerCoasTerps"></canvas>
 
-<p>We are a roller coaster and theme park club at UMD</p>
+  <canvas data-text="We are a roller coaster and theme park club at UMD"
+    role="img"
+    aria-label="We are a roller coaster and theme park club at UMD"></canvas>
 
-<p>Meetings every other Tuesday at 7pm in Jimenez</p>
+  <canvas data-text="Meetings every other Tuesday at 7pm in Jimenez"
+    role="img"
+    aria-label="Meetings every other Tuesday at 7pm in Jimenez"></canvas>
 
-<p>Follow us on social media</p>
-<a href = https://www.instagram.com/thrillridesumd/>Instagram</a>
-<a href = https://terplink.umd.edu/organization/thrillrides>TerpLink</a>
+  <canvas data-text="Follow us on social media"
+    role="img" aria-label="Follow us on social media"></canvas>
+
+  <a href="https://www.instagram.com/thrillridesumd/"
+     aria-label="Instagram">
+    <canvas data-text="Instagram" aria-hidden="true"></canvas>
+  </a>
+
+  <a href="https://terplink.umd.edu/organization/thrillrides"
+     aria-label="TerpLink">
+    <canvas data-text="TerpLink" aria-hidden="true"></canvas>
+  </a>
 </div>
+
+<script>
+  document.querySelectorAll(".pixelated canvas").forEach(canvas => {
+    const ctx = canvas.getContext("2d");
+    const heading = canvas.dataset.heading === "true";
+    const link = canvas.closest("a");
+    const font = heading ? "bold 20px serif" : "12px serif";
+
+    canvas.width = 320;
+    ctx.font = font;
+
+    const lines = [];
+    let line = "";
+
+    for (const word of canvas.dataset.text.split(" ")) {
+      const next = line ? line + " " + word : word;
+      if (ctx.measureText(next).width > 312 && line) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = next;
+      }
+    }
+    lines.push(line);
+
+    const lineHeight = heading ? 26 : 17;
+    canvas.height = lines.length * lineHeight + 14;
+
+    ctx.font = font;
+    ctx.textBaseline = "top";
+    ctx.fillStyle = link ? "#0000ee" : "#000000";
+
+    lines.forEach((text, i) => {
+      const y = 4 + i * lineHeight;
+      ctx.fillText(text, 4, y);
+
+      if (link) {
+        ctx.fillRect(4, y + 13, ctx.measureText(text).width, 1);
+      }
+    });
+  });
+</script>
