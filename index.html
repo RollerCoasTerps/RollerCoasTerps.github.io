@@ -2,19 +2,11 @@
   .pixelated {
     width: 320px;
     zoom: 3;
-    filter: url(#pixelate);
+   
   }
 </style>
 
-<svg width="0" height="0" style="position:absolute">
-  <filter id="pixelate" x="0" y="0" width="100%" height="100%">
-    <feFlood x="0" y="0" width="1" height="1"/>
-    <feComposite width="4" height="4"/>
-    <feTile result="grid"/>
-    <feComposite in="SourceGraphic" in2="grid" operator="in"/>
-    <feMorphology operator="dilate" radius="2"/>
-  </filter>
-</svg>
+
 <div class="pixelated">
 <h1>RollerCoasTerps</h1>
 
